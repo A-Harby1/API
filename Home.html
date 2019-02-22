@@ -65,6 +65,35 @@ h1{
                 var t = "<img src='"+data.Poster+"' style='width:300px;height:420px;float:right;'> <ul><li>Title: "+data.Title+"</li><li>Year: "+data.Year+"</li><li>Run Time: "+data.Runtime+"</li><li>Actors: "+data.Actors+"</li><li>Awards: "+data.Awards+"</li><li>Plot: "+data.Plot+"</li><li>Writer: "+data.Writer+"</li><li>Rating: "+data.imdbRating+"</li></ul>";
                 document.getElementById("result").innerHTML = t;
             });
+
+			$.getJSON( "https://newsapi.org/v2/everything?q="+i+"&sortBy=popularity&apiKey=c932e6e23c2f4c7b9f46e6c3ae8f5831",function(datanews) {
+				console.log(datanews);
+			var author = [datanews.articles[0].author];
+			var description = [datanews.articles[0].description];
+			var publishedAt = [datanews.articles[0].publishedAt];
+			var title = [datanews.articles[0].title];
+			var url = [datanews.articles[0].url];
+			for (var i = 1; i < 3; i++) {
+				if (datanews.articles[i] == null) {break;}
+				author.push(datanews.articles[i].author);
+				description.push(datanews.articles[i].description);
+				publishedAt.push(datanews.articles[i].publishedAt);
+				title.push(datanews.articles[i].title);
+				url.push(datanews.articles[i].url);
+			}
+			var x = "<ul>";
+			for (var j = 0 ; j < 2 ; j++)
+			{
+				x += "<li>title: "+title[j]+"</li>";
+				x += "<li>Author: "+author[j]+"</li>";
+				x += "<li>Description: "+description[j]+"</li>";
+				x += "<li>URL: "+url[j]+"</li>";
+
+			}
+				x += "</ul>";
+				document.getElementById("result").innerHTML += x;
+			});
+
         }
      function myFunction(){
         var search_movie = document.getElementById("search").value;
