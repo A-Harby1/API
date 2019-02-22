@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <title>API</title>
+<style type="text/css">
+body{
+    margin:0;
+    padding: 0;
+    background-image: url("2.jpg");
+    background-repeat: no-repeat;
+    background-size: 1310px 710px;
+}
+h1{
+    margin-top: 7px;
+    margin-left: 630px;
+}
+#search{
+    width: 400px;
+    height: 50px;
+    margin-left: 500px;
+    margin-top: 20px;
+    border-radius: 50px;
+    font-size: 1.3em;
+    padding-left: 15px;
+}
+#submit{
+    margin-left: 10px;
+    background-color: #008cba;
+    border-radius: 30px;
+    width: 150px;
+    height: 40px;
+    font-size: 1.2em;
+}
+.res{
+    margin-top: 13px;
+    margin-left: 295px;
+    width: 970px;
+    height: 450px;
+    border-radius: 20px;
+    padding: 5px;
+    background-color:rgba(0,0,0,0.2);
+    color: white;
+}
+.ul1 {
+    font-size: 1.1em;
+    list-style-type: none;
+}
+</style>   
+</head>
+<body>
+<div class="container">
+    <h1>Entertainment World</h1>
+    <input type="text" name="search" id="search" required>
+    <input type="submit" name="submit" id="submit" value="Search" onclick="myFunction1()">
+    <div class="res" id="result"></div>
+</div>
+<div id="info">
+   
+</div>
+</body>
+<script type="text/javascript">
+    function myFunction1() {
+        var album_name=document.getElementById("search").value;
+        $.getJSON("http://ws.audioscrobbler.com/2.0/?method=album.search&album="+album_name+"&api_key=7c3f8a4994f214165ad88d09ed349596&format=json",function(data)
+            {
+                    console.log(data);
+
+                    var artistName=new Array();
+                    var albumName=new Array();
+                    var links=new Array();
+                
+                     artistName=[data.results.albummatches.album[0].artist,data.results.albummatches.album[1].artist,data.results.albummatches.album[2].artist,data.results.albummatches.album[3].artist];
+                      albumName=[data.results.albummatches.album[0].name,data.results.albummatches.album[1].name,data.results.albummatches.album[2].name,data.results.albummatches.album[2].name];
+                    links=[data.results.albummatches.album[0].url,data.results.albummatches.album[1].url,data.results.albummatches.album[2].url,data.results.albummatches.album[2].url];
+                    
+                    var artist1="<p class=\"name\">Artist Name:"+artistName[0]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[0]+"</p>"+"<a href=\""+links[0]+"\" target=\"_blank\">Go To Album</a><br>";
+                    var artist2= "<p class=\"name\">Artist Name:"+artistName[1]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[1]+"</p>"+"<a href=\""+links[1]+"\" target=\"_blank\">Go To Album</a><br>";
+                    var artist3="<p class=\"name\">Artist Name:"+artistName[2]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[2]+"</p>"+"<a href=\""+links[2]+"\" target=\"_blank\">Go To Album</a><br>";
+                    var artist4="<p class=\"name\">Artist Name:"+artistName[3]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[3]+"</p>"+"<a href=\""+links[3]+"\" target=\"_blank\">Go To Album</a><br>";
+                    document.getElementById("result").innerHTML=artist1+artist2+artist3+artist4;
+                    
+                }
+            );
+            
+    }
+</script>
+</html>
+    
