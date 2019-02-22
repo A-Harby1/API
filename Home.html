@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <title>API</title>
+<style type="text/css">
+body{
+    margin:0;
+    padding: 0;
+    background-image: url("2.jpg");
+    background-repeat: no-repeat;
+    background-size: 1310px 710px;
+}
+h1{
+    margin-top: 7px;
+    margin-left: 630px;
+}
+#search{
+    width: 400px;
+    height: 50px;
+    margin-left: 500px;
+    margin-top: 20px;
+    border-radius: 50px;
+    font-size: 1.3em;
+    padding-left: 15px;
+}
+#submit{
+    margin-left: 10px;
+    background-color: #008cba;
+    border-radius: 30px;
+    width: 150px;
+    height: 40px;
+    font-size: 1.2em;
+}
+.res{
+    margin-top: 13px;
+    margin-left: 295px;
+    width: 970px;
+    height: 450px;
+    border-radius: 20px;
+    padding: 5px;
+    background-color:rgba(0,0,0,0.2);
+    color: white;
+}
+.ul1 {
+    font-size: 1.1em;
+    list-style-type: none;
+}
+</style>   
+</head>
+<body>
+<div class="container">
+    <h1>Entertainment World</h1>
+    <input type="text" name="search" id="search" required>
+    <input type="submit" name="submit" id="submit" value="Search" onclick="myFunction()">
+    <div class="res" id="result"></div>
+</div>
+</body>
+<script type="text/javascript">
+    function myFunction1(i) {
+            $.getJSON("http://www.omdbapi.com/?apikey=12e1df53&t="+i,function(data){
+                var t = "<img src='"+data.Poster+"' style='width:300px;height:420px;float:right;'> <ul><li>Title: "+data.Title+"</li><li>Year: "+data.Year+"</li><li>Run Time: "+data.Runtime+"</li><li>Actors: "+data.Actors+"</li><li>Awards: "+data.Awards+"</li><li>Plot: "+data.Plot+"</li><li>Writer: "+data.Writer+"</li><li>Rating: "+data.imdbRating+"</li></ul>";
+                document.getElementById("result").innerHTML = t;
+            });
+        }
+     function myFunction(){
+        var search_movie = document.getElementById("search").value;
+        $.getJSON("http://www.omdbapi.com/?apikey=12e1df53&s="+search_movie,function(data){
+        console.log(data);
+        var title = [data.Search[0].Title];
+        var id = [data.Search[0].imdbID];
+        var poster = [data.Search[0].Poster];
+        for (var i = 1; i < 5; i++) {
+            if (data.Search[i] == null) {break;}
+            title.push(data.Search[i].Title);
+            poster.push(data.Search[i].Poster);
+        }
+        var fLen = title.length;
+        var text = "<ul class='ul1'>";
+        for (var i = 0; i < fLen; i++) {
+            text += "<li>" + title[i] + "<br><input type='image' src='"+ poster[i] +"' style='width:175px;height:245px;float:left;' onclick='myFunction1(\""+title[i]+"\")' >" + "</li>";
+        }
+        text += "</ul>";
+        document.getElementById("result").innerHTML = text;
+        });
+    }
+</script>
+</html>
+    
