@@ -13,6 +13,7 @@ body{
     background-image: url("2.jpg");
     background-repeat: no-repeat;
     background-size: 1310px 710px;
+	background-color: black;
 }
 h1{
     margin-top: 7px;
@@ -81,14 +82,13 @@ h1{
 				title.push(datanews.articles[i].title);
 				url.push(datanews.articles[i].url);
 			}
-			var x = "<ul>";
+			var x = "<h5>News About the Movie</h5><ul>";
 			for (var j = 0 ; j < 2 ; j++)
 			{
 				x += "<li>title: "+title[j]+"</li>";
 				x += "<li>Author: "+author[j]+"</li>";
 				x += "<li>Description: "+description[j]+"</li>";
-				x += "<li>URL: "+url[j]+"</li>";
-
+				x += "<li>URL: <a href=\""+url[j]+"\">"+url[j]+"</a></li>";
 			}
 				x += "</ul>";
 				document.getElementById("result").innerHTML += x;
