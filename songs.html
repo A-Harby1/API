@@ -36,6 +36,14 @@ h1{
     height: 40px;
     font-size: 1.2em;
 }
+#back
+{
+    width: 100px;
+    height:30px;
+    margin-left: 1200px;
+     margin-top: 5px;
+     background-color:#008cba;
+}
 .res{
     margin-top: 13px;
     margin-left: 295px;
@@ -50,20 +58,25 @@ h1{
     font-size: 1.1em;
     list-style-type: none;
 }
+
 </style>   
 </head>
 <body>
 <div class="container">
     <h1>Entertainment World</h1>
-    <input type="text" name="search" id="search" required>
+    <input type="text" name="search" id="search" placeholder="enter album name" required>
     <input type="submit" name="submit" id="submit" value="Search" onclick="myFunction1()">
     <div class="res" id="result"></div>
 </div>
 <div id="info">
-   
+   <button id="back" onclick="home()">Back</button>
 </div>
 </body>
 <script type="text/javascript">
+    function home()
+    {
+        location.replace("homePage.html");
+    }
     function myFunction1() {
         var album_name=document.getElementById("search").value;
         $.getJSON("http://ws.audioscrobbler.com/2.0/?method=album.search&album="+album_name+"&api_key=7c3f8a4994f214165ad88d09ed349596&format=json",function(data)

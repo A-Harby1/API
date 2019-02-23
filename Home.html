@@ -50,17 +50,30 @@ h1{
     font-size: 1.1em;
     list-style-type: none;
 }
+#back
+{
+    width: 100px;
+    height:30px;
+    margin-left: 1200px;
+     margin-top: 5px;
+     background-color:#008cba;
+}
 </style>   
 </head>
 <body>
 <div class="container">
     <h1>Entertainment World</h1>
-    <input type="text" name="search" id="search" required>
+    <input type="text" name="search" id="search" placeholder="enter movie name" required >
     <input type="submit" name="submit" id="submit" value="Search" onclick="myFunction()">
     <div class="res" id="result"></div>
+    <button id="back" onclick="home()">Back</button>
 </div>
 </body>
 <script type="text/javascript">
+    function home()
+    {
+        location.replace("homePage.html");
+    }
     function myFunction1(i) {
             $.getJSON("http://www.omdbapi.com/?apikey=12e1df53&t="+i,function(data){
                 var t = "<img src='"+data.Poster+"' style='width:300px;height:420px;float:right;'> <ul><li>Title: "+data.Title+"</li><li>Year: "+data.Year+"</li><li>Run Time: "+data.Runtime+"</li><li>Actors: "+data.Actors+"</li><li>Awards: "+data.Awards+"</li><li>Plot: "+data.Plot+"</li><li>Writer: "+data.Writer+"</li><li>Rating: "+data.imdbRating+"</li></ul>";
