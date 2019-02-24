@@ -13,6 +13,7 @@ body{
     background-image: url("2.jpg");
     background-repeat: no-repeat;
     background-size: 1310px 710px;
+	background-color: black;
 }
 h1{
     margin-top: 7px;
@@ -49,22 +50,63 @@ h1{
     font-size: 1.1em;
     list-style-type: none;
 }
+#back
+{
+    width: 100px;
+    height:30px;
+    margin-left: 1200px;
+     margin-top: 5px;
+     background-color:#008cba;
+}
 </style>   
 </head>
 <body>
 <div class="container">
     <h1>Entertainment World</h1>
-    <input type="text" name="search" id="search" required>
+    <input type="text" name="search" id="search" placeholder="enter movie name" required >
     <input type="submit" name="submit" id="submit" value="Search" onclick="myFunction()">
     <div class="res" id="result"></div>
+    <button id="back" onclick="home()">Back</button>
 </div>
 </body>
 <script type="text/javascript">
+    function home()
+    {
+        location.replace("homePage.html");
+    }
     function myFunction1(i) {
             $.getJSON("http://www.omdbapi.com/?apikey=12e1df53&t="+i,function(data){
                 var t = "<img src='"+data.Poster+"' style='width:300px;height:420px;float:right;'> <ul><li>Title: "+data.Title+"</li><li>Year: "+data.Year+"</li><li>Run Time: "+data.Runtime+"</li><li>Actors: "+data.Actors+"</li><li>Awards: "+data.Awards+"</li><li>Plot: "+data.Plot+"</li><li>Writer: "+data.Writer+"</li><li>Rating: "+data.imdbRating+"</li></ul>";
                 document.getElementById("result").innerHTML = t;
             });
+
+			$.getJSON( "https://newsapi.org/v2/everything?q="+i+"&sortBy=popularity&apiKey=c932e6e23c2f4c7b9f46e6c3ae8f5831",function(datanews) {
+				console.log(datanews);
+			var author = [datanews.articles[0].author];
+			var description = [datanews.articles[0].description];
+			var publishedAt = [datanews.articles[0].publishedAt];
+			var title = [datanews.articles[0].title];
+			var url = [datanews.articles[0].url];
+			for (var i = 1; i < 3; i++) {
+				if (datanews.articles[i] == null) {break;}
+				author.push(datanews.articles[i].author);
+				description.push(datanews.articles[i].description);
+				publishedAt.push(datanews.articles[i].publishedAt);
+				title.push(datanews.articles[i].title);
+				url.push(datanews.articles[i].url);
+			}
+			var x = "<h5>News About the Movie</h5><ul>";
+			for (var j = 0 ; j < 2 ; j++)
+			{
+				x += "<li>title: "+title[j]+"</li>";
+				x += "<li>Author: "+author[j]+"</li>";
+				x += "<li>Description: "+description[j]+"</li>";
+				x += "<li>URL: <a href=\""+url[j]+"\">"+url[j]+"</a></li>";
+			}
+				x += "</ul>";
+				document.getElementById("result").innerHTML += x;
+			});
+
         }
      function myFunction(){
         var search_movie = document.getElementById("search").value;
