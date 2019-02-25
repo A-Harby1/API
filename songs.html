@@ -22,7 +22,7 @@ h1{
 #search{
     width: 400px;
     height: 50px;
-    margin-left: 500px;
+    margin-left: 300px;
     margin-top: 20px;
     border-radius: 50px;
     font-size: 1.3em;
@@ -67,7 +67,7 @@ h1{
     <input type="text" name="search" id="search" placeholder="enter album name" required>
     <input type="submit" name="submit" id="submit" value="Album" onclick="myFunction1()">
     <input type="submit" name="submit" id="submit" value="Track" onclick="myFunction2()">
-
+    <input type="submit" name="submit" id="submit" value="Artist" onclick="myFunction3()">
     <div class="res" id="result"></div>
 </div>
 <div id="info">
@@ -90,9 +90,8 @@ h1{
                     var links=new Array();
                 
                      artistName=[data.results.albummatches.album[0].artist,data.results.albummatches.album[1].artist,data.results.albummatches.album[2].artist,data.results.albummatches.album[3].artist];
-                      albumName=[data.results.albummatches.album[0].name,data.results.albummatches.album[1].name,data.results.albummatches.album[2].name,data.results.albummatches.album[2].name];
-                    links=[data.results.albummatches.album[0].url,data.results.albummatches.album[1].url,data.results.albummatches.album[2].url,data.results.albummatches.album[2].url];
-                    
+                      albumName=[data.results.albummatches.album[0].name,data.results.albummatches.album[1].name,data.results.albummatches.album[2].name,data.results.albummatches.album[3].name];
+                    links=[data.results.albummatches.album[0].url,data.results.albummatches.album[1].url,data.results.albummatches.album[2].url,data.results.albummatches.album[3].url];
                     var artist1="<p class=\"name\">Artist Name:"+artistName[0]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[0]+"</p>"+"<a href=\""+links[0]+"\" target=\"_blank\">Go To Album</a><br>";
                     var artist2= "<p class=\"name\">Artist Name:"+artistName[1]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[1]+"</p>"+"<a href=\""+links[1]+"\" target=\"_blank\">Go To Album</a><br>";
                     var artist3="<p class=\"name\">Artist Name:"+artistName[2]+"</p> "+"<p class=\" albums\">Album Name:"+albumName[2]+"</p>"+"<a href=\""+links[2]+"\" target=\"_blank\">Go To Album</a><br>";
@@ -114,9 +113,8 @@ h1{
                     var links=new Array();
                 
                      artistName=[data.results.trackmatches.track[0].artist,data.results.trackmatches.track[1].artist,data.results.trackmatches.track[2].artist,data.results.trackmatches.track[3].artist];
-                      trackName=[data.results.trackmatches.track[0].name,data.results.trackmatches.track[1].name,data.results.trackmatches.track[2].name,data.results.trackmatches.track[2].name];
-                    links=[data.results.trackmatches.track[0].url,data.results.trackmatches.track[1].url,data.results.trackmatches.track[2].url,data.results.trackmatches.track[2].url];
-                    
+                      trackName=[data.results.trackmatches.track[0].name,data.results.trackmatches.track[1].name,data.results.trackmatches.track[2].name,data.results.trackmatches.track[3].name];
+                    links=[data.results.trackmatches.track[0].url,data.results.trackmatches.track[1].url,data.results.trackmatches.track[2].url,data.results.trackmatches.track[3].url];
                     var artist1="<p class=\"name\">Artist Name:"+artistName[0]+"</p> "+"<p class=\" albums\">track Name:"+trackName[0]+"</p>"+"<a href=\""+links[0]+"\" target=\"_blank\">Go To Album</a><br>";
                     var artist2= "<p class=\"name\">Artist Name:"+artistName[1]+"</p> "+"<p class=\" albums\">track Name:"+trackName[1]+"</p>"+"<a href=\""+links[1]+"\" target=\"_blank\">Go To Album</a><br>";
                     var artist3="<p class=\"name\">Artist Name:"+artistName[2]+"</p> "+"<p class=\" albums\">track Name:"+trackName[2]+"</p>"+"<a href=\""+links[2]+"\" target=\"_blank\">Go To Album</a><br>";
@@ -125,7 +123,29 @@ h1{
                     
                 }
             );
-            
+    }
+        function myFunction3() {
+        var artist_name=document.getElementById("search").value;
+        $.getJSON("http://ws.audioscrobbler.com/2.0/?method=artist.search&artist="+artist_name+"&api_key=7c3f8a4994f214165ad88d09ed349596&format=json",function(data)
+            {
+                    console.log(data);
+
+                    var artistName=new Array();
+                    var trackName=new Array();
+                    var links=new Array();
+                
+                     artistName=[data.results.artistmatches.artist[0].name,data.results.artistmatches.artist[1].name,data.results.artistmatches.artist[2].name,data.results.artistmatches.artist[3].name];
+                      trackName=[data.results.artistmatches.artist[0].listeners,data.results.artistmatches.artist[1].listeners,data.results.artistmatches.artist[2].listeners,data.results.artistmatches.artist[3].listeners];
+                    links=[data.results.artistmatches.artist[0].url,data.results.artistmatches.artist[1].url,data.results.artistmatches.artist[2].url,data.results.artistmatches.artist[3].url];
+                    
+                    var artist1="<p class=\"name\">Artist Name:"+artistName[0]+"</p> "+"<p class=\" albums\">Followers:"+trackName[0]+"</p>"+"<a href=\""+links[0]+"\" target=\"_blank\">Go To Artist</a><br>";
+                    var artist2= "<p class=\"name\">Artist Name:"+artistName[1]+"</p> "+"<p class=\" albums\">Followers:"+trackName[1]+"</p>"+"<a href=\""+links[1]+"\" target=\"_blank\">Go To Artist</a><br>";
+                    var artist3="<p class=\"name\">Artist Name:"+artistName[2]+"</p> "+"<p class=\" albums\">Followers:"+trackName[2]+"</p>"+"<a href=\""+links[2]+"\" target=\"_blank\">Go To Artist</a><br>";
+                    var artist4="<p class=\"name\">Artist Name:"+artistName[3]+"</p> "+"<p class=\" albums\">Followers:"+trackName[3]+"</p>"+"<a href=\""+links[3]+"\" target=\"_blank\">Go To Artist</a><br>";
+                    document.getElementById("result").innerHTML=artist1+artist2+artist3+artist4;
+                    
+                }
+            );   
     }
 </script>
 </html>
